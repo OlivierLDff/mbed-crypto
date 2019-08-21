@@ -59,6 +59,34 @@ The provided makefiles pass options to the compiler that assume a GCC-like comma
 
 To run the unit tests on the host machine, run `make test` from the top-level directory. If you are cross-compiling, copy the test executable from the `tests` directory to the target machine.
 
+### Compiling inside a superbuild
+
+A super build is when a project compile all of it's possible dependencies. To avoid naming clashing and project/target with the same name we need to use "namespace" in the naming convention. This is what this fork aim to bring.
+
+- **MBEDCRYPTO_TARGET**: The name of the target that will be generated. *Default "mbedcrypto"*.
+- **MBEDCRYPTO_BUILD_SHARED** : Build the library dynamically (ON/TRUE) or statically (OFF/FALSE). When using these variable to avoid any more problem the project only generate one type of target and can't generate dynamic and static. This avoid many headhaches.
+- **MBEDCRYPTO_FOLDER_PREFIX**: Prefix folder for all mbedcrypto generated targets in generated project (only decorative). *Default "mbedcrypto".*
+- **MBEDCRYPTO_UNSAFE_BUILD**: Allow unsafe builds. These builds ARE NOT SECURE. *Default "OFF". [ON/OFF]*.
+- **MBEDCRYPTO_ENABLE_TESTS**: Enable the tests. This will create a target `${MBEDCRYPTO_TESTS_PREFIX}_test`. *Default "OFF". [ON/OFF]*.
+- **MBEDCRYPTO_TESTS_PREFIX**: Prefix for every tests to avoid naming clashes in superbuild. *Default "mbedcrypto".*
+- **MBEDCRYPTO_ENABLE_EXAMPLES**: Enable the examples. This will create a target `${MBEDCRYPTO_EXAMPLES_PREFIX}_test`. *Default "OFF". [ON/OFF]*.
+- **MBEDCRYPTO_EXAMPLES_PREFIX**: Prefix for every examples to avoid naming clashes in superbuild. *Default "mbedcrypto".*
+- **MBEDCRYPTO_ENABLE_INSTALL**: Enable install target. *Default "OFF". [ON/OFF]*.
+- **MBEDCRYPTO_INSTALL_PREFIX**: Folder for all mbedcrypto headers in the install folder. *Default "mbedcrypto".*
+
+With this configuration the default behavior of a "dry" cmake will differ from original branch. In order to have the same behavior you need to call:
+
+```
+cmake -DMBEDCRYPTO_FOLDER_PREFIX="" -DMBEDCRYPTO_ENABLE_TESTS=ON -DMBEDCRYPTO_TESTS_PREFIX="" -DMBEDCRYPTO_ENABLE_EXAMPLES=ON -DMBEDCRYPTO_EXAMPLES_PREFIX="" -DMBEDCRYPTO_ENABLE_INSTALL=ON -DMBEDCRYPTO_INSTALL_PREFIX="" ..
+
+```
+
+*Note 1: For now only library, programs and tests targets are tested. covtest, lcov, memcheck are not tested with this method.*
+*Note 2: Changing ${MBEDCRYPTO_TARGET} to another value than mbedcrypto might break stuff because of hardcoded values everywhere.*
+*Note 3: CMake minimum version 3.11 is required for FetchContent instead of using annoying to work with git submodules.*
+
+Check my superbuild fork of mbedtls to see integration.
+
 ### Compiling as a subproject
 
 Mbed Crypto supports being built as a subproject of Mbed TLS. Mbed TLS can use Mbed Crypto for its cryptography implementation by using Mbed Crypto as a subproject.
