@@ -1,9 +1,13 @@
-add_executable(hello hello.c)
-target_link_libraries(hello mbedcrypto)
+add_executable(${MBEDCRYPTO_EXAMPLES_PREFIX_}hello hello.c)
+target_link_libraries(${MBEDCRYPTO_EXAMPLES_PREFIX_}hello ${MBEDCRYPTO_TARGET})
+SET_TARGET_PROPERTIES(${MBEDCRYPTO_EXAMPLES_PREFIX_}hello PROPERTIES FOLDER ${MBEDCRYPTO_FOLDER_PREFIX}/Examples/hash)
 
-add_executable(generic_sum generic_sum.c)
-target_link_libraries(generic_sum mbedcrypto)
+add_executable(${MBEDCRYPTO_EXAMPLES_PREFIX_}generic_sum generic_sum.c)
+target_link_libraries(${MBEDCRYPTO_EXAMPLES_PREFIX_}generic_sum ${MBEDCRYPTO_TARGET})
+SET_TARGET_PROPERTIES(${MBEDCRYPTO_EXAMPLES_PREFIX_}generic_sum PROPERTIES FOLDER ${MBEDCRYPTO_FOLDER_PREFIX}/Examples/hash)
 
-install(TARGETS hello generic_sum
-        DESTINATION "bin"
-        PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE)
+IF(MBEDCRYPTO_ENABLE_INSTALL)
+    install(TARGETS ${MBEDCRYPTO_EXAMPLES_PREFIX_}hello ${MBEDCRYPTO_EXAMPLES_PREFIX_}generic_sum
+            DESTINATION "bin"
+            PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE)
+ENDIF(MBEDCRYPTO_ENABLE_INSTALL)

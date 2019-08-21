@@ -1,57 +1,89 @@
-add_executable(dh_genprime dh_genprime.c)
-target_link_libraries(dh_genprime mbedcrypto)
+add_executable(${MBEDCRYPTO_EXAMPLES_PREFIX_}dh_genprime dh_genprime.c)
+target_link_libraries(${MBEDCRYPTO_EXAMPLES_PREFIX_}dh_genprime ${MBEDCRYPTO_TARGET})
+SET_TARGET_PROPERTIES(${MBEDCRYPTO_EXAMPLES_PREFIX_}dh_genprime PROPERTIES FOLDER ${MBEDCRYPTO_FOLDER_PREFIX}/Examples/pkey)
 
-add_executable(ecdh_curve25519 ecdh_curve25519.c)
-target_link_libraries(ecdh_curve25519 mbedcrypto)
+add_executable(${MBEDCRYPTO_EXAMPLES_PREFIX_}ecdh_curve25519 ecdh_curve25519.c)
+target_link_libraries(${MBEDCRYPTO_EXAMPLES_PREFIX_}ecdh_curve25519 ${MBEDCRYPTO_TARGET})
+SET_TARGET_PROPERTIES(${MBEDCRYPTO_EXAMPLES_PREFIX_}ecdh_curve25519 PROPERTIES FOLDER ${MBEDCRYPTO_FOLDER_PREFIX}/Examples/pkey)
 
-add_executable(ecdsa ecdsa.c)
-target_link_libraries(ecdsa mbedcrypto)
+add_executable(${MBEDCRYPTO_EXAMPLES_PREFIX_}ecdsa ecdsa.c)
+target_link_libraries(${MBEDCRYPTO_EXAMPLES_PREFIX_}ecdsa ${MBEDCRYPTO_TARGET})
+SET_TARGET_PROPERTIES(${MBEDCRYPTO_EXAMPLES_PREFIX_}ecdsa PROPERTIES FOLDER ${MBEDCRYPTO_FOLDER_PREFIX}/Examples/pkey)
 
-add_executable(gen_key gen_key.c)
-target_link_libraries(gen_key mbedcrypto)
+add_executable(${MBEDCRYPTO_EXAMPLES_PREFIX_}gen_key gen_key.c)
+target_link_libraries(${MBEDCRYPTO_EXAMPLES_PREFIX_}gen_key ${MBEDCRYPTO_TARGET})
+SET_TARGET_PROPERTIES(${MBEDCRYPTO_EXAMPLES_PREFIX_}gen_key PROPERTIES FOLDER ${MBEDCRYPTO_FOLDER_PREFIX}/Examples/pkey)
 
-add_executable(key_app key_app.c)
-target_link_libraries(key_app mbedcrypto)
+add_executable(${MBEDCRYPTO_EXAMPLES_PREFIX_}key_app key_app.c)
+target_link_libraries(${MBEDCRYPTO_EXAMPLES_PREFIX_}key_app ${MBEDCRYPTO_TARGET})
+SET_TARGET_PROPERTIES(${MBEDCRYPTO_EXAMPLES_PREFIX_}key_app PROPERTIES FOLDER ${MBEDCRYPTO_FOLDER_PREFIX}/Examples/pkey)
 
-add_executable(key_app_writer key_app_writer.c)
-target_link_libraries(key_app_writer mbedcrypto)
+add_executable(${MBEDCRYPTO_EXAMPLES_PREFIX_}key_app_writer key_app_writer.c)
+target_link_libraries(${MBEDCRYPTO_EXAMPLES_PREFIX_}key_app_writer ${MBEDCRYPTO_TARGET})
+SET_TARGET_PROPERTIES(${MBEDCRYPTO_EXAMPLES_PREFIX_}key_app_writer PROPERTIES FOLDER ${MBEDCRYPTO_FOLDER_PREFIX}/Examples/pkey)
 
-add_executable(mpi_demo mpi_demo.c)
-target_link_libraries(mpi_demo mbedcrypto)
+add_executable(${MBEDCRYPTO_EXAMPLES_PREFIX_}mpi_demo mpi_demo.c)
+target_link_libraries(${MBEDCRYPTO_EXAMPLES_PREFIX_}mpi_demo ${MBEDCRYPTO_TARGET})
+SET_TARGET_PROPERTIES(${MBEDCRYPTO_EXAMPLES_PREFIX_}mpi_demo PROPERTIES FOLDER ${MBEDCRYPTO_FOLDER_PREFIX}/Examples/pkey)
 
-add_executable(rsa_genkey rsa_genkey.c)
-target_link_libraries(rsa_genkey mbedcrypto)
+add_executable(${MBEDCRYPTO_EXAMPLES_PREFIX_}rsa_genkey rsa_genkey.c)
+target_link_libraries(${MBEDCRYPTO_EXAMPLES_PREFIX_}rsa_genkey ${MBEDCRYPTO_TARGET})
+SET_TARGET_PROPERTIES(${MBEDCRYPTO_EXAMPLES_PREFIX_}rsa_genkey PROPERTIES FOLDER ${MBEDCRYPTO_FOLDER_PREFIX}/Examples/pkey)
 
-add_executable(rsa_sign rsa_sign.c)
-target_link_libraries(rsa_sign mbedcrypto)
+add_executable(${MBEDCRYPTO_EXAMPLES_PREFIX_}rsa_sign rsa_sign.c)
+target_link_libraries(${MBEDCRYPTO_EXAMPLES_PREFIX_}rsa_sign ${MBEDCRYPTO_TARGET})
+SET_TARGET_PROPERTIES(${MBEDCRYPTO_EXAMPLES_PREFIX_}rsa_sign PROPERTIES FOLDER ${MBEDCRYPTO_FOLDER_PREFIX}/Examples/pkey)
 
-add_executable(rsa_verify rsa_verify.c)
-target_link_libraries(rsa_verify mbedcrypto)
+add_executable(${MBEDCRYPTO_EXAMPLES_PREFIX_}rsa_verify rsa_verify.c)
+target_link_libraries(${MBEDCRYPTO_EXAMPLES_PREFIX_}rsa_verify ${MBEDCRYPTO_TARGET})
+SET_TARGET_PROPERTIES(${MBEDCRYPTO_EXAMPLES_PREFIX_}rsa_verify PROPERTIES FOLDER ${MBEDCRYPTO_FOLDER_PREFIX}/Examples/pkey)
 
-add_executable(rsa_sign_pss rsa_sign_pss.c)
-target_link_libraries(rsa_sign_pss mbedcrypto)
+add_executable(${MBEDCRYPTO_EXAMPLES_PREFIX_}rsa_sign_pss rsa_sign_pss.c)
+target_link_libraries(${MBEDCRYPTO_EXAMPLES_PREFIX_}rsa_sign_pss ${MBEDCRYPTO_TARGET})
+SET_TARGET_PROPERTIES(${MBEDCRYPTO_EXAMPLES_PREFIX_}rsa_sign_pss PROPERTIES FOLDER ${MBEDCRYPTO_FOLDER_PREFIX}/Examples/pkey)
 
-add_executable(rsa_verify_pss rsa_verify_pss.c)
-target_link_libraries(rsa_verify_pss mbedcrypto)
+add_executable(${MBEDCRYPTO_EXAMPLES_PREFIX_}rsa_verify_pss rsa_verify_pss.c)
+target_link_libraries(${MBEDCRYPTO_EXAMPLES_PREFIX_}rsa_verify_pss ${MBEDCRYPTO_TARGET})
+SET_TARGET_PROPERTIES(${MBEDCRYPTO_EXAMPLES_PREFIX_}rsa_verify_pss PROPERTIES FOLDER ${MBEDCRYPTO_FOLDER_PREFIX}/Examples/pkey)
 
-add_executable(rsa_encrypt rsa_encrypt.c)
-target_link_libraries(rsa_encrypt mbedcrypto)
+add_executable(${MBEDCRYPTO_EXAMPLES_PREFIX_}rsa_encrypt rsa_encrypt.c)
+target_link_libraries(${MBEDCRYPTO_EXAMPLES_PREFIX_}rsa_encrypt ${MBEDCRYPTO_TARGET})
+SET_TARGET_PROPERTIES(${MBEDCRYPTO_EXAMPLES_PREFIX_}rsa_encrypt PROPERTIES FOLDER ${MBEDCRYPTO_FOLDER_PREFIX}/Examples/pkey)
 
-add_executable(rsa_decrypt rsa_decrypt.c)
-target_link_libraries(rsa_decrypt mbedcrypto)
+add_executable(${MBEDCRYPTO_EXAMPLES_PREFIX_}rsa_decrypt rsa_decrypt.c)
+target_link_libraries(${MBEDCRYPTO_EXAMPLES_PREFIX_}rsa_decrypt ${MBEDCRYPTO_TARGET})
+SET_TARGET_PROPERTIES(${MBEDCRYPTO_EXAMPLES_PREFIX_}rsa_decrypt PROPERTIES FOLDER ${MBEDCRYPTO_FOLDER_PREFIX}/Examples/pkey)
 
-add_executable(pk_sign pk_sign.c)
-target_link_libraries(pk_sign mbedcrypto)
+add_executable(${MBEDCRYPTO_EXAMPLES_PREFIX_}pk_sign pk_sign.c)
+target_link_libraries(${MBEDCRYPTO_EXAMPLES_PREFIX_}pk_sign ${MBEDCRYPTO_TARGET})
+SET_TARGET_PROPERTIES(${MBEDCRYPTO_EXAMPLES_PREFIX_}pk_sign PROPERTIES FOLDER ${MBEDCRYPTO_FOLDER_PREFIX}/Examples/pkey)
 
-add_executable(pk_verify pk_verify.c)
-target_link_libraries(pk_verify mbedcrypto)
+add_executable(${MBEDCRYPTO_EXAMPLES_PREFIX_}pk_verify pk_verify.c)
+target_link_libraries(${MBEDCRYPTO_EXAMPLES_PREFIX_}pk_verify ${MBEDCRYPTO_TARGET})
+SET_TARGET_PROPERTIES(${MBEDCRYPTO_EXAMPLES_PREFIX_}pk_verify PROPERTIES FOLDER ${MBEDCRYPTO_FOLDER_PREFIX}/Examples/pkey)
 
-add_executable(pk_encrypt pk_encrypt.c)
-target_link_libraries(pk_encrypt mbedcrypto)
+add_executable(${MBEDCRYPTO_EXAMPLES_PREFIX_}pk_encrypt pk_encrypt.c)
+target_link_libraries(${MBEDCRYPTO_EXAMPLES_PREFIX_}pk_encrypt ${MBEDCRYPTO_TARGET})
+SET_TARGET_PROPERTIES(${MBEDCRYPTO_EXAMPLES_PREFIX_}pk_encrypt PROPERTIES FOLDER ${MBEDCRYPTO_FOLDER_PREFIX}/Examples/pkey)
 
-add_executable(pk_decrypt pk_decrypt.c)
-target_link_libraries(pk_decrypt mbedcrypto)
+add_executable(${MBEDCRYPTO_EXAMPLES_PREFIX_}pk_decrypt pk_decrypt.c)
+target_link_libraries(${MBEDCRYPTO_EXAMPLES_PREFIX_}pk_decrypt ${MBEDCRYPTO_TARGET})
+SET_TARGET_PROPERTIES(${MBEDCRYPTO_EXAMPLES_PREFIX_}pk_decrypt PROPERTIES FOLDER ${MBEDCRYPTO_FOLDER_PREFIX}/Examples/pkey)
 
-install(TARGETS dh_genprime key_app mpi_demo rsa_genkey rsa_sign rsa_verify rsa_encrypt rsa_decrypt pk_encrypt pk_decrypt pk_sign pk_verify gen_key
+IF(MBEDCRYPTO_ENABLE_INSTALL)
+    install(TARGETS ${MBEDCRYPTO_EXAMPLES_PREFIX_}dh_genprime
+        ${MBEDCRYPTO_EXAMPLES_PREFIX_}key_app
+        ${MBEDCRYPTO_EXAMPLES_PREFIX_}mpi_demo
+        ${MBEDCRYPTO_EXAMPLES_PREFIX_}rsa_genkey
+        ${MBEDCRYPTO_EXAMPLES_PREFIX_}rsa_sign
+        ${MBEDCRYPTO_EXAMPLES_PREFIX_}rsa_verify
+        ${MBEDCRYPTO_EXAMPLES_PREFIX_}rsa_encrypt
+        ${MBEDCRYPTO_EXAMPLES_PREFIX_}rsa_decrypt
+        ${MBEDCRYPTO_EXAMPLES_PREFIX_}pk_encrypt
+        ${MBEDCRYPTO_EXAMPLES_PREFIX_}pk_decrypt
+        ${MBEDCRYPTO_EXAMPLES_PREFIX_}pk_sign
+        ${MBEDCRYPTO_EXAMPLES_PREFIX_}pk_verify
+        ${MBEDCRYPTO_EXAMPLES_PREFIX_}gen_key
         DESTINATION "bin"
         PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE)
+ENDIF(MBEDCRYPTO_ENABLE_INSTALL)

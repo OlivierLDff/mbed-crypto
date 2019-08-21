@@ -1,13 +1,17 @@
 set(libs
-    mbedcrypto
+    ${MBEDCRYPTO_TARGET}
 )
 
-add_executable(strerror strerror.c)
-target_link_libraries(strerror ${libs})
+add_executable(${MBEDCRYPTO_EXAMPLES_PREFIX_}strerror strerror.c)
+target_link_libraries(${MBEDCRYPTO_EXAMPLES_PREFIX_}strerror ${libs})
+SET_TARGET_PROPERTIES(${MBEDCRYPTO_EXAMPLES_PREFIX_}strerror PROPERTIES FOLDER ${MBEDCRYPTO_FOLDER_PREFIX}/Examples/util)
 
-add_executable(pem2der pem2der.c)
-target_link_libraries(pem2der ${libs})
+add_executable(${MBEDCRYPTO_EXAMPLES_PREFIX_}pem2der pem2der.c)
+target_link_libraries(${MBEDCRYPTO_EXAMPLES_PREFIX_}pem2der ${libs})
+SET_TARGET_PROPERTIES(${MBEDCRYPTO_EXAMPLES_PREFIX_}pem2der PROPERTIES FOLDER ${MBEDCRYPTO_FOLDER_PREFIX}/Examples/util)
 
-install(TARGETS strerror pem2der
+IF(MBEDCRYPTO_ENABLE_INSTALL)
+install(TARGETS ${MBEDCRYPTO_EXAMPLES_PREFIX_}strerror ${MBEDCRYPTO_EXAMPLES_PREFIX_}pem2der
         DESTINATION "bin"
         PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE)
+ENDIF(MBEDCRYPTO_ENABLE_INSTALL)

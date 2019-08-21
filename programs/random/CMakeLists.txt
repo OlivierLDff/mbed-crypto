@@ -1,12 +1,17 @@
-add_executable(gen_random_havege gen_random_havege.c)
-target_link_libraries(gen_random_havege mbedcrypto)
+add_executable(${MBEDCRYPTO_EXAMPLES_PREFIX_}gen_random_havege gen_random_havege.c)
+target_link_libraries(${MBEDCRYPTO_EXAMPLES_PREFIX_}gen_random_havege ${MBEDCRYPTO_TARGET})
+SET_TARGET_PROPERTIES(${MBEDCRYPTO_EXAMPLES_PREFIX_}gen_random_havege PROPERTIES FOLDER ${MBEDCRYPTO_FOLDER_PREFIX}/Examples/random)
 
-add_executable(gen_random_ctr_drbg gen_random_ctr_drbg.c)
-target_link_libraries(gen_random_ctr_drbg mbedcrypto)
+add_executable(${MBEDCRYPTO_EXAMPLES_PREFIX_}gen_random_ctr_drbg gen_random_ctr_drbg.c)
+target_link_libraries(${MBEDCRYPTO_EXAMPLES_PREFIX_}gen_random_ctr_drbg ${MBEDCRYPTO_TARGET})
+SET_TARGET_PROPERTIES(${MBEDCRYPTO_EXAMPLES_PREFIX_}gen_random_ctr_drbg PROPERTIES FOLDER ${MBEDCRYPTO_FOLDER_PREFIX}/Examples/random)
 
-add_executable(gen_entropy gen_entropy.c)
-target_link_libraries(gen_entropy mbedcrypto)
+add_executable(${MBEDCRYPTO_EXAMPLES_PREFIX_}gen_entropy gen_entropy.c)
+target_link_libraries(${MBEDCRYPTO_EXAMPLES_PREFIX_}gen_entropy ${MBEDCRYPTO_TARGET})
+SET_TARGET_PROPERTIES(${MBEDCRYPTO_EXAMPLES_PREFIX_}gen_entropy PROPERTIES FOLDER ${MBEDCRYPTO_FOLDER_PREFIX}/Examples/random)
 
-install(TARGETS gen_random_havege gen_random_ctr_drbg gen_entropy
-        DESTINATION "bin"
-        PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE)
+IF(MBEDCRYPTO_ENABLE_INSTALL)
+    install(TARGETS ${MBEDCRYPTO_EXAMPLES_PREFIX_}gen_random_havege ${MBEDCRYPTO_EXAMPLES_PREFIX_}gen_random_ctr_drbg ${MBEDCRYPTO_EXAMPLES_PREFIX_}gen_entropy
+            DESTINATION "bin"
+            PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE)
+ENDIF(MBEDCRYPTO_ENABLE_INSTALL)

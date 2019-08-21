@@ -1,5 +1,5 @@
 set(libs
-    mbedcrypto
+    ${MBEDCRYPTO_TARGET}
 )
 
 # Set the project root directory if it's not already defined, as may happen if
@@ -33,13 +33,16 @@ function(add_test_suite suite_name)
         set(data_name ${suite_name})
     endif()
 
+    SET(TEST_SUITE_NAME ${MBEDCRYPTO_TESTS_PREFIX_}test_suite_${data_name})
+
     add_custom_command(
-        OUTPUT test_suite_${data_name}.c
-        COMMAND ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/scripts/generate_test_code.py -f ${CMAKE_CURRENT_SOURCE_DIR}/suites/test_suite_${suite_name}.function -d ${CMAKE_CURRENT_SOURCE_DIR}/suites/test_suite_${data_name}.data -t ${CMAKE_CURRENT_SOURCE_DIR}/suites/main_test.function -p ${CMAKE_CURRENT_SOURCE_DIR}/suites/host_test.function -s ${CMAKE_CURRENT_SOURCE_DIR}/suites --helpers-file ${CMAKE_CURRENT_SOURCE_DIR}/suites/helpers.function -o .
-        DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/scripts/generate_test_code.py mbedcrypto ${CMAKE_CURRENT_SOURCE_DIR}/suites/helpers.function ${CMAKE_CURRENT_SOURCE_DIR}/suites/main_test.function ${CMAKE_CURRENT_SOURCE_DIR}/suites/host_test.function ${CMAKE_CURRENT_SOURCE_DIR}/suites/test_suite_${suite_name}.function ${CMAKE_CURRENT_SOURCE_DIR}/suites/test_suite_${data_name}.data
+        OUTPUT ${TEST_SUITE_NAME}.c
+        COMMAND ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/scripts/generate_test_code.py -f ${CMAKE_CURRENT_SOURCE_DIR}/suites/test_suite_${suite_name}.function -d ${CMAKE_CURRENT_SOURCE_DIR}/suites/${TEST_SUITE_NAME}.data -t ${CMAKE_CURRENT_SOURCE_DIR}/suites/main_test.function -p ${CMAKE_CURRENT_SOURCE_DIR}/suites/host_test.function -s ${CMAKE_CURRENT_SOURCE_DIR}/suites --helpers-file ${CMAKE_CURRENT_SOURCE_DIR}/suites/helpers.function -o .
+        DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/scripts/generate_test_code.py ${MBEDCRYPTO_TARGET} ${CMAKE_CURRENT_SOURCE_DIR}/suites/helpers.function ${CMAKE_CURRENT_SOURCE_DIR}/suites/main_test.function ${CMAKE_CURRENT_SOURCE_DIR}/suites/host_test.function ${CMAKE_CURRENT_SOURCE_DIR}/suites/test_suite_${suite_name}.function ${CMAKE_CURRENT_SOURCE_DIR}/suites/${TEST_SUITE_NAME}.data
     )
 
-    set(exe_name test_suite_${data_name})
+
+    set(exe_name ${TEST_SUITE_NAME})
     # Add a prefix to differentiate these tests from those of the parent
     # module, when this project is built as a submodule.
     if(USE_CRYPTO_SUBMODULE)
@@ -47,7 +50,8 @@ function(add_test_suite suite_name)
     endif()
 
     include_directories(${CMAKE_CURRENT_SOURCE_DIR})
-    add_executable(${exe_name} test_suite_${data_name}.c)
+    add_executable(${exe_name} ${TEST_SUITE_NAME}.c)
+    SET_TARGET_PROPERTIES(${exe_name} PROPERTIES FOLDER ${MBEDCRYPTO_FOLDER_PREFIX}/Tests)
     target_link_libraries(${exe_name} ${libs})
     target_include_directories(${exe_name}
         PUBLIC ${MBEDTLS_DIR}/include/

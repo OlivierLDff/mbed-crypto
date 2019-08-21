@@ -1,6 +1,11 @@
-option(USE_STATIC_MBEDTLS_LIBRARY "Build mbed TLS static library." ON)
-option(USE_SHARED_MBEDTLS_LIBRARY "Build mbed TLS shared library." OFF)
-option(LINK_WITH_PTHREAD "Explicitly link mbed TLS library to pthread." OFF)
+IF(MBEDCRYPTO_BUILD_SHARED)
+    option(USE_STATIC_MBEDTLS_LIBRARY "Build mbed TLS static library." OFF)
+    option(USE_SHARED_MBEDTLS_LIBRARY "Build mbed TLS shared library." ON)
+ELSE(MBEDCRYPTO_BUILD_SHARED)
+    option(USE_STATIC_MBEDTLS_LIBRARY "Build mbed TLS static library." ON)
+    option(USE_SHARED_MBEDTLS_LIBRARY "Build mbed TLS shared library." OFF)
+ENDIF(MBEDCRYPTO_BUILD_SHARED)
+option(LINK_WITH_PTHREAD "Explicitly link mbed TLS library to pthread." ${MBEDCRYPTO_LINK_WITH_PTHREAD})
 
 # Set the project root directory if it's not already defined, as may happen if
 # the library folder is included directly by a parent project, without
@@ -130,45 +135,53 @@ if (NOT USE_STATIC_MBEDTLS_LIBRARY AND NOT USE_SHARED_MBEDTLS_LIBRARY)
 endif(NOT USE_STATIC_MBEDTLS_LIBRARY AND NOT USE_SHARED_MBEDTLS_LIBRARY)
 
 if(USE_STATIC_MBEDTLS_LIBRARY AND USE_SHARED_MBEDTLS_LIBRARY)
-    set(mbedcrypto_static_target "mbedcrypto_static")
+    set(mbedcrypto_static_target "${MBEDCRYPTO_TARGET}_static")
 elseif(USE_STATIC_MBEDTLS_LIBRARY)
-    set(mbedcrypto_static_target "mbedcrypto")
+    set(mbedcrypto_static_target "${MBEDCRYPTO_TARGET}")
 endif()
 
 if(USE_STATIC_MBEDTLS_LIBRARY)
     add_library(${mbedcrypto_static_target} STATIC ${src_crypto})
-    set_target_properties(${mbedcrypto_static_target} PROPERTIES OUTPUT_NAME mbedcrypto)
+    set_target_properties(${mbedcrypto_static_target} PROPERTIES OUTPUT_NAME ${MBEDCRYPTO_TARGET})
     target_link_libraries(${mbedcrypto_static_target} ${libs})
     target_include_directories(${mbedcrypto_static_target}
         PUBLIC ${MBEDTLS_DIR}/include/
         PUBLIC ${MBEDTLS_DIR}/crypto/include/)
+    SET_TARGET_PROPERTIES(${mbedcrypto_static_target} PROPERTIES FOLDER ${MBEDCRYPTO_FOLDER_PREFIX})
 
+    IF(MBEDCRYPTO_ENABLE_INSTALL)
     install(TARGETS ${mbedcrypto_static_target}
             DESTINATION ${LIB_INSTALL_DIR}
             PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE)
+    ENDIF(MBEDCRYPTO_ENABLE_INSTALL)
 endif(USE_STATIC_MBEDTLS_LIBRARY)
 
 if(USE_SHARED_MBEDTLS_LIBRARY)
-    add_library(mbedcrypto SHARED ${src_crypto})
-    set_target_properties(mbedcrypto PROPERTIES VERSION 2.17.0 SOVERSION 3)
-    target_link_libraries(mbedcrypto ${libs})
-    target_include_directories(mbedcrypto
+    add_library(${MBEDCRYPTO_TARGET} SHARED ${src_crypto})
+    set_target_properties(${MBEDCRYPTO_TARGET} PROPERTIES VERSION 2.17.0 SOVERSION 3)
+    target_link_libraries(${MBEDCRYPTO_TARGET} ${libs})
+    target_include_directories(${MBEDCRYPTO_TARGET}
         PUBLIC ${MBEDTLS_DIR}/include/
         PUBLIC ${MBEDTLS_DIR}/crypto/include/)
+    SET_TARGET_PROPERTIES(${MBEDCRYPTO_TARGET} PROPERTIES FOLDER ${MBEDCRYPTO_FOLDER_PREFIX})
 
-    install(TARGETS mbedcrypto
+    IF(MBEDCRYPTO_ENABLE_INSTALL)
+    install(TARGETS ${MBEDCRYPTO_TARGET}
             DESTINATION ${LIB_INSTALL_DIR}
             PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE)
+    ENDIF(MBEDCRYPTO_ENABLE_INSTALL)
 endif(USE_SHARED_MBEDTLS_LIBRARY)
 
 if(USE_CRYPTO_SUBMODULE)
-    add_custom_target(crypto_lib DEPENDS mbedcrypto)
+    add_custom_target(crypto_lib DEPENDS ${MBEDCRYPTO_TARGET})
     if(USE_STATIC_MBEDTLS_LIBRARY AND USE_SHARED_MBEDTLS_LIBRARY)
         add_dependencies(crypto_lib mbedcrypto_static)
     endif()
+    SET_TARGET_PROPERTIES(crypto_lib PROPERTIES FOLDER ${MBEDCRYPTO_FOLDER_PREFIX}/Utils)
 else()
-    add_custom_target(lib DEPENDS mbedcrypto)
+    add_custom_target(${MBEDCRYPTO_EXAMPLES_PREFIX_}lib DEPENDS ${MBEDCRYPTO_TARGET})
     if(USE_STATIC_MBEDTLS_LIBRARY AND USE_SHARED_MBEDTLS_LIBRARY)
-        add_dependencies(lib mbedcrypto_static)
+        add_dependencies(${MBEDCRYPTO_EXAMPLES_PREFIX_}lib mbedcrypto_static)
     endif()
+    SET_TARGET_PROPERTIES(${MBEDCRYPTO_EXAMPLES_PREFIX_}lib PROPERTIES FOLDER ${MBEDCRYPTO_FOLDER_PREFIX}/Utils)
 endif()
