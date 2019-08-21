@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.11)
+cmake_minimum_required(VERSION 2.6)
 
 # General
 SET( MBEDCRYPTO_PROJECT "mbedcrypto" CACHE STRING "Project Name")
@@ -266,6 +266,7 @@ if(ENABLE_TESTING)
             COMMAND make test
             COMMAND programs/test/selftest
         )
+        SET_TARGET_PROPERTIES(${MBEDCRYPTO_TESTS_PREFIX_}covtest PROPERTIES FOLDER ${MBEDCRYPTO_FOLDER_PREFIX}/Tests)
 
         ADD_CUSTOM_TARGET(${MBEDCRYPTO_TESTS_PREFIX_}lcov
             COMMAND rm -rf Coverage
@@ -277,6 +278,7 @@ if(ENABLE_TESTING)
             COMMAND genhtml --title "mbed TLS" --description-file descriptions --keep-descriptions --legend --no-branch-coverage -o Coverage final.info
             COMMAND rm -f files.info tests.info all.info final.info descriptions
         )
+        SET_TARGET_PROPERTIES(${MBEDCRYPTO_TESTS_PREFIX_}lcov PROPERTIES FOLDER ${MBEDCRYPTO_FOLDER_PREFIX}/Tests)
 
         ADD_CUSTOM_TARGET(${MBEDCRYPTO_TESTS_PREFIX_}memcheck
             COMMAND sed -i.bak s+/usr/bin/valgrind+`which valgrind`+ DartConfiguration.tcl
@@ -285,6 +287,7 @@ if(ENABLE_TESTING)
             COMMAND rm -f memcheck.log
             COMMAND mv DartConfiguration.tcl.bak DartConfiguration.tcl
         )
+        SET_TARGET_PROPERTIES(${MBEDCRYPTO_TESTS_PREFIX_}memcheck PROPERTIES FOLDER ${MBEDCRYPTO_FOLDER_PREFIX}/Tests)
     endif(UNIX)
 endif()
 
