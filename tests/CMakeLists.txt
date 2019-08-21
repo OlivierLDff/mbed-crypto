@@ -33,16 +33,18 @@ function(add_test_suite suite_name)
         set(data_name ${suite_name})
     endif()
 
-    SET(TEST_SUITE_NAME ${MBEDCRYPTO_TESTS_PREFIX_}test_suite_${data_name})
+    #SET(TEST_SUITE_DATA_NAME ${MBEDCRYPTO_TESTS_PREFIX_}test_suite_${data_name})
+    SET(TEST_SUITE_DATA_NAME test_suite_${data_name})
+    SET(TEST_SUITE_NAME test_suite_${suite_name})
 
     add_custom_command(
-        OUTPUT ${TEST_SUITE_NAME}.c
-        COMMAND ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/scripts/generate_test_code.py -f ${CMAKE_CURRENT_SOURCE_DIR}/suites/test_suite_${suite_name}.function -d ${CMAKE_CURRENT_SOURCE_DIR}/suites/${TEST_SUITE_NAME}.data -t ${CMAKE_CURRENT_SOURCE_DIR}/suites/main_test.function -p ${CMAKE_CURRENT_SOURCE_DIR}/suites/host_test.function -s ${CMAKE_CURRENT_SOURCE_DIR}/suites --helpers-file ${CMAKE_CURRENT_SOURCE_DIR}/suites/helpers.function -o .
-        DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/scripts/generate_test_code.py ${MBEDCRYPTO_TARGET} ${CMAKE_CURRENT_SOURCE_DIR}/suites/helpers.function ${CMAKE_CURRENT_SOURCE_DIR}/suites/main_test.function ${CMAKE_CURRENT_SOURCE_DIR}/suites/host_test.function ${CMAKE_CURRENT_SOURCE_DIR}/suites/test_suite_${suite_name}.function ${CMAKE_CURRENT_SOURCE_DIR}/suites/${TEST_SUITE_NAME}.data
+        OUTPUT ${TEST_SUITE_DATA_NAME}.c
+        COMMAND ${PYTHON_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/scripts/generate_test_code.py -f ${CMAKE_CURRENT_SOURCE_DIR}/suites/${TEST_SUITE_NAME}.function -d ${CMAKE_CURRENT_SOURCE_DIR}/suites/${TEST_SUITE_DATA_NAME}.data -t ${CMAKE_CURRENT_SOURCE_DIR}/suites/main_test.function -p ${CMAKE_CURRENT_SOURCE_DIR}/suites/host_test.function -s ${CMAKE_CURRENT_SOURCE_DIR}/suites --helpers-file ${CMAKE_CURRENT_SOURCE_DIR}/suites/helpers.function -o .
+        DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/scripts/generate_test_code.py ${MBEDCRYPTO_TARGET} ${CMAKE_CURRENT_SOURCE_DIR}/suites/helpers.function ${CMAKE_CURRENT_SOURCE_DIR}/suites/main_test.function ${CMAKE_CURRENT_SOURCE_DIR}/suites/host_test.function ${CMAKE_CURRENT_SOURCE_DIR}/suites/${TEST_SUITE_NAME}.function ${CMAKE_CURRENT_SOURCE_DIR}/suites/${TEST_SUITE_DATA_NAME}.data
     )
 
 
-    set(exe_name ${TEST_SUITE_NAME})
+    set(exe_name ${MBEDCRYPTO_TESTS_PREFIX_}${TEST_SUITE_DATA_NAME})
     # Add a prefix to differentiate these tests from those of the parent
     # module, when this project is built as a submodule.
     if(USE_CRYPTO_SUBMODULE)
@@ -50,7 +52,7 @@ function(add_test_suite suite_name)
     endif()
 
     include_directories(${CMAKE_CURRENT_SOURCE_DIR})
-    add_executable(${exe_name} ${TEST_SUITE_NAME}.c)
+    add_executable(${exe_name} ${TEST_SUITE_DATA_NAME}.c)
     SET_TARGET_PROPERTIES(${exe_name} PROPERTIES FOLDER ${MBEDCRYPTO_FOLDER_PREFIX}/Tests)
     target_link_libraries(${exe_name} ${libs})
     target_include_directories(${exe_name}
@@ -61,7 +63,7 @@ function(add_test_suite suite_name)
     if(${data_name} MATCHES ${SKIP_TEST_SUITES_REGEX})
         message(STATUS "The test suite ${data_name} will not be executed.")
     else()
-        add_test(${data_name}-suite ${exe_name} --verbose)
+        add_test(${MBEDCRYPTO_TESTS_PREFIX_}${data_name}-suite ${exe_name} --verbose)
     endif()
 endfunction(add_test_suite)
 
