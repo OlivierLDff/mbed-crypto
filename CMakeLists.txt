@@ -5,13 +5,13 @@ SET( MBEDCRYPTO_PROJECT "mbedcrypto" CACHE STRING "Project Name")
 SET( MBEDCRYPTO_TARGET "${MBEDCRYPTO_PROJECT}" CACHE STRING "mbedcrypto library name" )
 SET( MBEDCRYPTO_VERSION "1.1.1" CACHE STRING "mbedcrypto current version, this is only decorative and will not configure any files" FORCE )
 SET( MBEDCRYPTO_BUILD_SHARED OFF CACHE BOOL "Build as a shared library (ON) or as static (OFF)" )
-SET( MBEDCRYPTO_FOLDER_PREFIX ${MBEDCRYPTO_PROJECT} CACHE STRING "Prefix folder for all mbedcrypto generated targets in generated project (only decorative)" )
+SET( MBEDCRYPTO_FOLDER_PREFIX ${MBEDCRYPTO_TARGET} CACHE STRING "Prefix folder for all mbedcrypto generated targets in generated project (only decorative)" )
 SET( MBEDCRYPTO_UNSAFE_BUILD OFF CACHE BOOL "Allow unsafe builds. These builds ARE NOT SECURE" )
 SET( MBEDCRYPTO_LINK_WITH_PTHREAD OFF CACHE BOOL "Explicitly link mbed crypto library to pthread." )
 
 # Tests
 SET( MBEDCRYPTO_ENABLE_TESTS OFF CACHE BOOL "Create or not a target for test (compatible with CTests)" )
-SET( MBEDCRYPTO_TESTS_PREFIX ${MBEDCRYPTO_PROJECT} CACHE STRING "Prefix for all mbedcrypto tests" )
+SET( MBEDCRYPTO_TESTS_PREFIX ${MBEDCRYPTO_TARGET} CACHE STRING "Prefix for all mbedcrypto tests" )
 IF(NOT ${MBEDCRYPTO_TESTS_PREFIX} STREQUAL "")
     SET( MBEDCRYPTO_TESTS_PREFIX_ "${MBEDCRYPTO_TESTS_PREFIX}_" )
 ELSE(NOT ${MBEDCRYPTO_TESTS_PREFIX} STREQUAL "")
@@ -20,7 +20,7 @@ ENDIF(NOT ${MBEDCRYPTO_TESTS_PREFIX} STREQUAL "")
 
 # Examples
 SET( MBEDCRYPTO_ENABLE_EXAMPLES OFF CACHE BOOL "Create or not a target for examples" )
-SET( MBEDCRYPTO_EXAMPLES_PREFIX ${MBEDCRYPTO_PROJECT} CACHE STRING "Prefix for all mbedcrypto tests" )
+SET( MBEDCRYPTO_EXAMPLES_PREFIX ${MBEDCRYPTO_TARGET} CACHE STRING "Prefix for all mbedcrypto tests" )
 IF(NOT ${MBEDCRYPTO_EXAMPLES_PREFIX} STREQUAL "")
     SET( MBEDCRYPTO_EXAMPLES_PREFIX_ "${MBEDCRYPTO_EXAMPLES_PREFIX}_" )
 ELSE(NOT ${MBEDCRYPTO_EXAMPLES_PREFIX} STREQUAL "")
@@ -29,12 +29,12 @@ ENDIF(NOT ${MBEDCRYPTO_EXAMPLES_PREFIX} STREQUAL "")
 
 # Install
 SET( MBEDCRYPTO_ENABLE_INSTALL OFF CACHE BOOL "Create or not a target for install" )
-SET( MBEDCRYPTO_INSTALL_PREFIX ${MBEDCRYPTO_PROJECT} CACHE STRING "Prefix for all mbedcrypto headers in the install folder" )
+SET( MBEDCRYPTO_INSTALL_PREFIX ${MBEDCRYPTO_TARGET} CACHE STRING "Prefix for all mbedcrypto headers in the install folder" )
 
 if(TEST_CPP)
-    project("mbed TLS" LANGUAGES C CXX VERSION ${MBEDCRYPTO_VERSION})
+    project(${MBEDCRYPTO_PROJECT} LANGUAGES C CXX VERSION ${MBEDCRYPTO_VERSION})
 else()
-    project("mbed TLS" LANGUAGES C VERSION ${MBEDCRYPTO_VERSION})
+    project(${MBEDCRYPTO_PROJECT} LANGUAGES C VERSION ${MBEDCRYPTO_VERSION})
 endif()
 SET_PROPERTY(GLOBAL PROPERTY USE_FOLDERS ON)
 

@@ -77,7 +77,7 @@ A super build is when a project compile all of it's possible dependencies. To av
 With this configuration the default behavior of a "dry" cmake will differ from original branch. In order to have the same behavior you need to call:
 
 ```
-cmake -DMBEDCRYPTO_FOLDER_PREFIX="" -DMBEDCRYPTO_ENABLE_TESTS=ON -DMBEDCRYPTO_TESTS_PREFIX="" -DMBEDCRYPTO_ENABLE_EXAMPLES=ON -DMBEDCRYPTO_EXAMPLES_PREFIX="" -DMBEDCRYPTO_ENABLE_INSTALL=ON -DMBEDCRYPTO_INSTALL_PREFIX="" ..
+cmake -DMBEDCRYPTO_PROJECT="mbed Tls" -DMBEDCRYPTO_TARGET=mbedcrypto -DMBEDCRYPTO_FOLDER_PREFIX="" -DMBEDCRYPTO_ENABLE_TESTS=ON -DMBEDCRYPTO_TESTS_PREFIX="" -DMBEDCRYPTO_ENABLE_EXAMPLES=ON -DMBEDCRYPTO_EXAMPLES_PREFIX="" -DMBEDCRYPTO_ENABLE_INSTALL=ON -DMBEDCRYPTO_INSTALL_PREFIX="" ..
 
 ```
 
