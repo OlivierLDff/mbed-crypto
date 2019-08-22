@@ -47,7 +47,7 @@ function(add_test_suite suite_name)
     set(exe_name ${MBEDCRYPTO_TESTS_PREFIX_}${TEST_SUITE_DATA_NAME})
     # Add a prefix to differentiate these tests from those of the parent
     # module, when this project is built as a submodule.
-    if(USE_CRYPTO_SUBMODULE)
+    if(USE_CRYPTO_SUBMODULE AND NOT MBEDCRYPTO_TESTS_PREFIX_)
         set(exe_name crypto.${exe_name})
     endif()
 
@@ -63,6 +63,7 @@ function(add_test_suite suite_name)
     if(${data_name} MATCHES ${SKIP_TEST_SUITES_REGEX})
         message(STATUS "The test suite ${data_name} will not be executed.")
     else()
+        MESSAGE(STATUS "Add CTest: ${MBEDCRYPTO_TESTS_PREFIX_}${data_name}-suite")
         add_test(${MBEDCRYPTO_TESTS_PREFIX_}${data_name}-suite ${exe_name} --verbose)
     endif()
 endfunction(add_test_suite)
