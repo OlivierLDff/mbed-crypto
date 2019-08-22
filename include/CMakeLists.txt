@@ -5,6 +5,7 @@ if(INSTALL_MBEDTLS_HEADERS)
     file(GLOB headers "mbedtls/*.h")
     file(GLOB psa_headers "psa/*.h")
 
+    IF(MBEDCRYPTO_ENABLE_INSTALL)
     install(FILES ${headers}
         DESTINATION include/mbedtls
         PERMISSIONS OWNER_READ OWNER_WRITE GROUP_READ WORLD_READ)
@@ -12,6 +13,7 @@ if(INSTALL_MBEDTLS_HEADERS)
     install(FILES ${psa_headers}
         DESTINATION include/psa
         PERMISSIONS OWNER_READ OWNER_WRITE GROUP_READ WORLD_READ)
+    ENDIF(MBEDCRYPTO_ENABLE_INSTALL)
 
 endif(INSTALL_MBEDTLS_HEADERS)
 
